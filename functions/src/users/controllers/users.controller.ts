@@ -22,3 +22,14 @@ export const listUsers = async (request: Request, response: Response) => {
         response.status(error.status || 500).send(error);
     }
 };
+
+export const signInWithEmailAndPassword = async(request: Request, response: Response) => {
+    try {
+
+        const userIdToken = await usersModel.signInWithEmailAndPassword(request.body);
+        response.status(200).send(userIdToken);
+    } catch (error) {
+
+        response.status(error.status || 500).send(error);
+    }
+};

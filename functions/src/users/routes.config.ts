@@ -9,4 +9,8 @@ export const usersRoutesConfig = (app: Application) => {
     app.get('/users', [
         usersController.listUsers
     ]);
+
+    app.post('/login', [
+        usersController.signInWithEmailAndPassword
+    ]);
 };
