@@ -2,6 +2,7 @@ import {Request, Response} from "firebase-functions";
 import {NextFunction} from "express";
 import {ValidationDataSource} from "../services/constants.service";
 import {validate} from "../services/validate.service";
+import {adminAuth} from "../services/firebase.service";
 
 export const validator = (schema: any, dataSource?: ValidationDataSource) => {
 
@@ -29,4 +30,22 @@ export const validator = (schema: any, dataSource?: ValidationDataSource) => {
             response.status(400).send(validationResult.errors);
         }
     };
+};
+
+export const isAuthenticated = async (request: Request, response: Response, next: NextFunction) => {
+
+    if (request.headers.authorization) {
+
+        const token = request.headers.authorization.split(' ')[1];
+
+        try {
+
+            response.locals.user = await adminAuth.verifyIdToken(token, true);
+
+            next();
+        } catch (error) {
+
+            response.status(403).send();
+        }
+    }
 };

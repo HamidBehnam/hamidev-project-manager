@@ -2,6 +2,8 @@ import {Application} from "express";
 import * as usersController from './controllers/users.controller';
 import * as commonMiddleware from '../common/middlewares/common.middleware';
 import {usersSchemas} from "./services/schemas.service";
+import {commonSchemas} from "../common/services/schemas.service";
+import {ValidationDataSource} from "../common/services/constants.service";
 
 export const usersRoutesConfig = (app: Application) => {
     app.post('/users', [
@@ -9,6 +11,8 @@ export const usersRoutesConfig = (app: Application) => {
     ]);
 
     app.get('/users', [
+        commonMiddleware.validator(commonSchemas.auth, ValidationDataSource.Headers),
+        commonMiddleware.isAuthenticated,
         usersController.listUsers
     ]);
 
