@@ -14,8 +14,3 @@ usersRoutesConfig(app);
 main.use('/api/v1', app);
 
 export const webApi: HttpsFunction = functions.https.onRequest(main);
-
-// Default function usage:
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });

@@ -1,8 +1,8 @@
 import {Application} from "express";
+import * as projectsController from './controllers/projects.controller';
 
 export const projectsRoutesConfig = (app: Application) => {
-    app.get('/hi', (request, response) => {
-
-        response.send('this is going to be the project manager app!');
-    });
+    app.post('/projects', [
+        projectsController.createProject
+    ]);
 };
