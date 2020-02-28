@@ -1,5 +1,6 @@
 import * as firebaseAdmin from "firebase-admin";
 import UserRecord = firebaseAdmin.auth.UserRecord;
+import ListUsersResult = firebaseAdmin.auth.ListUsersResult;
 import {adminAuth} from "../../common/services/firebase.service";
 
 export const createUser = async (data: any) => {
@@ -8,5 +9,14 @@ export const createUser = async (data: any) => {
     return {
         ...user,
         additionalInfo: 'reserved for sending additional info'
+    };
+};
+
+export const listUsers = async () => {
+    const users: ListUsersResult = await adminAuth.listUsers();
+
+    return {
+        ...users,
+        count: users.users.length
     };
 };

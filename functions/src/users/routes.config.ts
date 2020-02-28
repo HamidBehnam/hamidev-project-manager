@@ -5,4 +5,8 @@ export const usersRoutesConfig = (app: Application) => {
     app.post('/users', [
         usersController.createUser
     ]);
+
+    app.get('/users', [
+        usersController.listUsers
+    ]);
 };

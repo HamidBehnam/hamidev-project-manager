@@ -11,3 +11,14 @@ export const createUser = async (request: Request, response: Response) => {
         response.status(error.status || 500).send(error);
     }
 };
+
+export const listUsers = async (request: Request, response: Response) => {
+    try {
+
+        const users = await usersModel.listUsers();
+        response.status(200).send(users);
+    } catch (error) {
+
+        response.status(error.status || 500).send(error);
+    }
+};
