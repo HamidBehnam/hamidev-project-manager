@@ -1,5 +1,7 @@
 import {Application} from "express";
 import * as usersController from './controllers/users.controller';
+import * as commonMiddleware from '../common/middlewares/common.middleware';
+import {usersSchemas} from "./services/schemas.service";
 
 export const usersRoutesConfig = (app: Application) => {
     app.post('/users', [
@@ -11,6 +13,7 @@ export const usersRoutesConfig = (app: Application) => {
     ]);
 
     app.post('/login', [
+        commonMiddleware.validator(usersSchemas.login),
         usersController.signInWithEmailAndPassword
     ]);
 };
