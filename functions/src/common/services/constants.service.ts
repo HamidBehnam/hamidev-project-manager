@@ -4,10 +4,10 @@ export enum ValidationDataSource {
 }
 
 export enum WorkPriority {
-    Urgent,
-    High,
+    Low,
     Normal,
-    Low
+    High,
+    Urgent
 }
 
 export enum WorkStatus {
@@ -18,7 +18,9 @@ export enum WorkStatus {
     Accepted
 }
 
-export enum ProjectMemberRole {
+export enum Role {
+    Guest,
+    Developer,
     Manager,
-    Developer
+    Creator
 }
