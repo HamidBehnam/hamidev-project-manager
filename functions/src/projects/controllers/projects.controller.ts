@@ -8,12 +8,23 @@ export const createProject = async (request: Request, response: Response) => {
 
         const projectData = {
             ...request.body,
-            creationDate: FieldValue.serverTimestamp(),
+            createdAt: FieldValue.serverTimestamp(),
             createdBy: response.locals.user.uid
         };
 
         const project = await projectsModel.createProject(projectData);
         response.status(201).send(project);
+    } catch (error) {
+
+        response.status(error.status || 500).send(error);
+    }
+};
+
+export const getProjects = async (request: Request, response: Response) => {
+    try {
+
+        const projects = await projectsModel.getProjects();
+        response.status(200).send(projects);
     } catch (error) {
 
         response.status(error.status || 500).send(error);
