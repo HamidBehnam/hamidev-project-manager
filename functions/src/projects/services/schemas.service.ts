@@ -20,5 +20,20 @@ export const projectsSchemas = {
             "additionalProperties": false,
             "minProperties": 1
         }
+    },
+    "getProjects": {
+        "properties": {
+            "limit": {
+                "type": "string",
+                "pattern": "^[0-9]*$"
+            },
+            "offset": {
+                "type": "string",
+                "pattern": "^[0-9]*$"
+            },
+            "orderBy": { "enum": [ "title", "priority", "status", "createdAt" ] },
+            "direction": { "enum": [ "asc", "desc" ] }
+        },
+        "additionalProperties": false
     }
 };

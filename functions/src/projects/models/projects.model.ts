@@ -15,9 +15,25 @@ export const createProject = async (data: any) => {
     };
 };
 
-export const getProjects = async () => {
+export const getProjects = async (queryParams: any) => {
 
-    const projectsQuerySnapshot: QuerySnapshot = await db.collection('projects').get();
+    const defaultQueryParams = {
+        limit: 0,
+        offset: 0,
+        orderBy: 'createdAt',
+        direction: 'asc'
+    };
+
+    const metaData = {
+        ...defaultQueryParams,
+        ...queryParams
+    };
+
+    const projectsQuerySnapshot: QuerySnapshot = await db.collection('projects')
+        .orderBy(metaData.orderBy, metaData.direction)
+        .offset(+ metaData.offset)
+        .limit(+ metaData.limit)
+        .get();
     return projectsQuerySnapshot.docs.map((projectDocumentSnapshot: DocumentSnapshot) => ({
         ...projectDocumentSnapshot.data(),
         id: projectDocumentSnapshot.id

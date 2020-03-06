@@ -14,6 +14,9 @@ export const validator = (schema: any, dataSource?: ValidationDataSource) => {
             case ValidationDataSource.Headers:
                 validationDataSource = request.headers;
                 break;
+            case ValidationDataSource.Query:
+                validationDataSource = request.query;
+                break;
             case ValidationDataSource.Body:
             default:
                 validationDataSource = request.body;

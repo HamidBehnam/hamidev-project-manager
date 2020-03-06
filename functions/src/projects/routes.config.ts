@@ -15,6 +15,7 @@ export const projectsRoutesConfig = (app: Application) => {
     app.get('/projects', [
         commonMiddleware.validator(commonSchemas.auth, ValidationDataSource.Headers),
         commonMiddleware.isAuthenticated,
+        commonMiddleware.validator(projectsSchemas.getProjects, ValidationDataSource.Query),
         projectsController.getProjects
     ]);
 };

@@ -23,7 +23,7 @@ export const createProject = async (request: Request, response: Response) => {
 export const getProjects = async (request: Request, response: Response) => {
     try {
 
-        const projects = await projectsModel.getProjects();
+        const projects = await projectsModel.getProjects(request.query);
         response.status(200).send(projects);
     } catch (error) {
 
