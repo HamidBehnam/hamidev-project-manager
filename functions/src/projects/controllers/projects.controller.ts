@@ -1,10 +1,18 @@
 import {Request, Response} from "firebase-functions";
 import * as projectsModel from '../models/projects.model';
+import * as firebaseAdmin from "firebase-admin";
+import FieldValue = firebaseAdmin.firestore.FieldValue;
 
 export const createProject = async (request: Request, response: Response) => {
     try {
 
-        const project = await projectsModel.createProject(request.body);
+        const projectData = {
+            ...request.body,
+            creationDate: FieldValue.serverTimestamp(),
+            createdBy: response.locals.user.uid
+        };
+
+        const project = await projectsModel.createProject(projectData);
         response.status(201).send(project);
     } catch (error) {
 
