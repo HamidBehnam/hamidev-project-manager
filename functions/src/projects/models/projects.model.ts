@@ -18,8 +18,6 @@ export const createProject = async (data: any) => {
 export const getProjects = async (queryParams: any) => {
 
     const defaultQueryParams = {
-        limit: 0,
-        offset: 0,
         orderBy: 'createdAt',
         direction: 'asc'
     };
