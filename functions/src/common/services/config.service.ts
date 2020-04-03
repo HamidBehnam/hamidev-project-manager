@@ -6,14 +6,14 @@ export const mongodbConfig = {
 };
 
 export const firebaseClientConfig = {
-    apiKey: "AIzaSyDdr7gWEZjcc3FoG1rskKiD_8Gn-sxQ1Ck",
-    authDomain: "hamidev-project-manager.firebaseapp.com",
-    databaseURL: "https://hamidev-project-manager.firebaseio.com",
-    projectId: "hamidev-project-manager",
-    storageBucket: "hamidev-project-manager.appspot.com",
-    messagingSenderId: "1051154798313",
-    appId: "1:1051154798313:web:c45bd5963e5b7a09b18278",
-    measurementId: "G-WZ4ZQXZN6L"
+    apiKey: "AIzaSyAj-GFjJhf4UuL2HZiciajHPEXzm6SJXOQ",
+    authDomain: "hamidev-project-manager-efac5.firebaseapp.com",
+    databaseURL: "https://hamidev-project-manager-efac5.firebaseio.com",
+    projectId: "hamidev-project-manager-efac5",
+    storageBucket: "hamidev-project-manager-efac5.appspot.com",
+    messagingSenderId: "883333477854",
+    appId: "1:883333477854:web:6e9cf937cc8e047b11d94f",
+    measurementId: "G-33DDZJBQQQ"
 };
 
 
