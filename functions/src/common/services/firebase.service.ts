@@ -8,6 +8,6 @@ import {firebaseClientConfig} from "./config.service";
 firebaseClient.initializeApp(firebaseClientConfig);
 firebaseAdmin.initializeApp();
 
-export const db: Firestore = firebaseAdmin.firestore();
+export const firebaseDb: Firestore = firebaseAdmin.firestore();
 export const adminAuth: AdminAuth = firebaseAdmin.auth();
 export const clientAuth: ClientAuth = firebaseClient.auth();

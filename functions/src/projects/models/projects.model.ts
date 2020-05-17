@@ -1,13 +1,13 @@
 import * as firebaseAdmin from 'firebase-admin';
-import {db} from "../../common/services/firebase.service";
+import {firebaseDb} from "../../common/services/firebase.service";
 import DocumentReference = firebaseAdmin.firestore.DocumentReference;
 import DocumentSnapshot = firebaseAdmin.firestore.DocumentSnapshot;
 import QuerySnapshot = firebaseAdmin.firestore.QuerySnapshot;
-import {mongodbClient} from "../../common/services/mongodb.service";
+import {db} from "../../common/services/mongodb.service";
 
 export const createProject = async (data: any) => {
 
-    const projectReference: DocumentReference = await db.collection('projects').add(data);
+    const projectReference: DocumentReference = await firebaseDb.collection('projects').add(data);
     const projectSnapshot: DocumentSnapshot = await projectReference.get();
 
     return {
@@ -18,7 +18,7 @@ export const createProject = async (data: any) => {
 
 export const getProjects = async (queryParams: any) => {
 
-    const collection: any = mongodbClient.db('gettingStarted').collection('people');
+    const collection: any = db.collection('people');
 
     let results: any;
 
@@ -42,7 +42,7 @@ export const getProjects = async (queryParams: any) => {
         ...queryParams
     };
 
-    const projectsQuerySnapshot: QuerySnapshot = await db.collection('projects')
+    const projectsQuerySnapshot: QuerySnapshot = await firebaseDb.collection('projects')
         .orderBy(metaData.orderBy, metaData.direction)
         .get();
     return projectsQuerySnapshot.docs.map((projectDocumentSnapshot: DocumentSnapshot) => ({
