@@ -14,7 +14,7 @@ export const mongodbConnector = new Promise<any>((resolve, reject) => {
             reject(err);
         } else {
             mongodbClient = client;
-            db = client.db("gettingStarted");
+            db = client.db("project_manager");
             resolve(client);
         }
     });
