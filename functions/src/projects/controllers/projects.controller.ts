@@ -1,14 +1,11 @@
 import {Request, Response} from "firebase-functions";
 import * as projectsModel from '../models/projects.model';
-import * as firebaseAdmin from "firebase-admin";
-import FieldValue = firebaseAdmin.firestore.FieldValue;
 
 export const createProject = async (request: Request, response: Response) => {
     try {
 
         const projectData = {
             ...request.body,
-            createdAt: FieldValue.serverTimestamp(),
             createdBy: response.locals.user.uid
         };
 

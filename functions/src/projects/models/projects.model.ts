@@ -1,19 +1,18 @@
 import * as firebaseAdmin from 'firebase-admin';
 import {firebaseDb} from "../../common/services/firebase.service";
-import DocumentReference = firebaseAdmin.firestore.DocumentReference;
 import DocumentSnapshot = firebaseAdmin.firestore.DocumentSnapshot;
 import QuerySnapshot = firebaseAdmin.firestore.QuerySnapshot;
 import {db} from "../../common/services/mongodb.service";
+import {InsertOneWriteOpResult} from "mongodb";
 
 export const createProject = async (data: any) => {
 
-    const projectReference: DocumentReference = await firebaseDb.collection('projects').add(data);
-    const projectSnapshot: DocumentSnapshot = await projectReference.get();
+    const insertProjectResult: InsertOneWriteOpResult<any> = await db.collection("people").insertOne({
+        ...data,
+        createdAt: new Date()
+    });
 
-    return {
-        ...projectSnapshot.data(),
-        id: projectSnapshot.id
-    };
+    return insertProjectResult.ops[0];
 };
 
 export const getProjects = async (queryParams: any) => {
