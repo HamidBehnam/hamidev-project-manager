@@ -5,18 +5,18 @@ export enum ValidationDataSource {
 }
 
 export enum WorkPriority {
-    Low,
-    Normal,
-    High,
-    Urgent
+    Low = '0',
+    Normal = '1',
+    High = '2',
+    Urgent = '3'
 }
 
 export enum WorkStatus {
-    NotStarted,
-    Started,
-    Done,
-    Rejected,
-    Accepted
+    NotStarted = '0',
+    Started = '1',
+    Done = '2',
+    Rejected = '3',
+    Accepted = '4'
 }
 
 export enum Role {

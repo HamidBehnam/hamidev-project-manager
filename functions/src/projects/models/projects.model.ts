@@ -1,7 +1,3 @@
-// import * as firebaseAdmin from 'firebase-admin';
-// import {firebaseDb} from "../../common/services/firebase.service";
-// import DocumentSnapshot = firebaseAdmin.firestore.DocumentSnapshot;
-// import QuerySnapshot = firebaseAdmin.firestore.QuerySnapshot;
 import {db} from "../../common/services/mongodb.service";
 import {Collection, InsertOneWriteOpResult} from "mongodb";
 
@@ -19,49 +15,35 @@ export const getProjects = async (queryParams: any) => {
 
     const projectsCollection: Collection = db.collection('projects');
 
-    // let results: any;
-    //
-    // await projectsCollection.find({}).toArray((err: any, items: any) => {
-    //     if (err) {
-    //         console.error('Caught error', err);
-    //     } else {
-    //         // const results = items.map((item: any) => { return { id: item._id, description: item.description}});
-    //         results = items;
-    //     }
-    // });
+    const defaultQueryParams = {
+        orderBy: 'createdAt',
+        direction: '1',
+        limit: '10',
+        page: '1'
+    };
 
-    const projects = new Promise((resolve, reject) => {
-        projectsCollection.find({}).sort({'createdAt': -1}).toArray((error: any, items: any) => {
-            if (error) {
-                console.error('Caught error', error);
-                reject(error);
-            } else {
-                // const results = items.map((item: any) => { return { id: item._id, description: item.description}});
-                resolve(items);
-            }
-        });
-    });
+    const metaData = {
+        ...defaultQueryParams,
+        ...queryParams
+    };
 
-    const projectsResult = await projects;
+    const query: any = {};
 
-    // const defaultQueryParams = {
-    //     orderBy: 'createdAt',
-    //     direction: 'asc'
-    // };
-    //
-    // const metaData = {
-    //     ...defaultQueryParams,
-    //     ...queryParams
-    // };
-    //
-    // const projectsQuerySnapshot: QuerySnapshot = await firebaseDb.collection('projects')
-    //     .orderBy(metaData.orderBy, metaData.direction)
-    //     .get();
-    // return projectsQuerySnapshot.docs.map((projectDocumentSnapshot: DocumentSnapshot) => ({
-    //     ...projectDocumentSnapshot.data(),
-    //     id: projectDocumentSnapshot.id,
-    //     mongodbResults: projectsResult
-    // }));
+    if (metaData.status) {
+        query.status = {
+            $in: metaData.status.split("|")
+        };
+    }
 
-    return projectsResult;
+    if (metaData.priority) {
+        query.priority = {
+            $in: metaData.priority.split("|")
+        };
+    }
+
+    return await projectsCollection.find(query)
+        .skip((+ metaData.page - 1) * + metaData.limit)
+        .limit(+ metaData.limit)
+        .sort({[metaData.orderBy]: + metaData.direction})
+        .toArray();
 };
