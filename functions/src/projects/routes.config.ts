@@ -31,4 +31,11 @@ export const projectsRoutesConfig = (app: Application) => {
         commonMiddleware.isAuthenticated,
         projectsController.deleteProject
     ]);
+
+    app.patch('/projects/:id', [
+        commonMiddleware.validator(commonSchemas.auth, ValidationDataSource.Headers),
+        commonMiddleware.isAuthenticated,
+        commonMiddleware.validator(projectsSchemas.project.partial),
+        projectsController.updateProject
+    ]);
 };

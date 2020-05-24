@@ -1,10 +1,10 @@
 import {db, mongoReference} from "../../common/services/mongodb.service";
 import {Collection, InsertOneWriteOpResult} from "mongodb";
 
-export const createProject = async (data: any) => {
+export const createProject = async (projectData: any) => {
 
     const insertProjectResult: InsertOneWriteOpResult<any> = await db.collection("projects").insertOne({
-        ...data,
+        ...projectData,
         createdAt: new Date()
     });
 
@@ -58,4 +58,13 @@ export const deleteProject = async (projectId: string) => {
 
     const projectIdObject = new mongoReference.ObjectID(projectId);
     return  await db.collection('projects').deleteOne({_id: projectIdObject})
+};
+
+export const updateProject = async (projectId: string, projectData: any) => {
+
+    const projectIdObject = new mongoReference.ObjectID(projectId);
+    return await db.collection('projects').updateOne(
+        { _id: projectIdObject },
+        { $set: projectData }
+        );
 };

@@ -1,6 +1,6 @@
 import {Request, Response} from "firebase-functions";
 import * as projectsModel from '../models/projects.model';
-import {DeleteWriteOpResultObject} from "mongodb";
+import {DeleteWriteOpResultObject, UpdateWriteOpResult} from "mongodb";
 
 export const createProject = async (request: Request, response: Response) => {
     try {
@@ -52,6 +52,18 @@ export const deleteProject = async (request: Request, response: Response) => {
 
             response.status(401).send(`can't find the requested project to delete`);
         }
+    } catch (error) {
+
+        response.status(error.status || 500).send(error);
+    }
+};
+
+export const updateProject = async (request: Request, response: Response) => {
+
+    try {
+
+        const project: UpdateWriteOpResult = await projectsModel.updateProject(request.params.id, request.body);
+        response.status(200).send(project.result);
     } catch (error) {
 
         response.status(error.status || 500).send(error);
