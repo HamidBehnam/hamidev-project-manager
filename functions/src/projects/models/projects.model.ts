@@ -1,4 +1,4 @@
-import {db} from "../../common/services/mongodb.service";
+import {db, mongoReference} from "../../common/services/mongodb.service";
 import {Collection, InsertOneWriteOpResult} from "mongodb";
 
 export const createProject = async (data: any) => {
@@ -46,4 +46,16 @@ export const getProjects = async (queryParams: any) => {
         .limit(+ metaData.limit)
         .sort({[metaData.orderBy]: + metaData.direction})
         .toArray();
+};
+
+export const getProject = async (projectId: string) => {
+
+    const projectIdObject = new mongoReference.ObjectID(projectId);
+    return await db.collection('projects').findOne({_id: projectIdObject});
+};
+
+export const deleteProject = async (projectId: string) => {
+
+    const projectIdObject = new mongoReference.ObjectID(projectId);
+    return  await db.collection('projects').deleteOne({_id: projectIdObject})
 };

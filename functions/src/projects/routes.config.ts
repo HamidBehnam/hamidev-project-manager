@@ -12,10 +12,23 @@ export const projectsRoutesConfig = (app: Application) => {
         commonMiddleware.validator(projectsSchemas.project.full),
         projectsController.createProject
     ]);
+
     app.get('/projects', [
         commonMiddleware.validator(commonSchemas.auth, ValidationDataSource.Headers),
         commonMiddleware.isAuthenticated,
         commonMiddleware.validator(projectsSchemas.getProjects, ValidationDataSource.Query),
         projectsController.getProjects
+    ]);
+
+    app.get('/projects/:id', [
+        commonMiddleware.validator(commonSchemas.auth, ValidationDataSource.Headers),
+        commonMiddleware.isAuthenticated,
+        projectsController.getProject
+    ]);
+
+    app.delete('/projects/:id', [
+        commonMiddleware.validator(commonSchemas.auth, ValidationDataSource.Headers),
+        commonMiddleware.isAuthenticated,
+        projectsController.deleteProject
     ]);
 };
