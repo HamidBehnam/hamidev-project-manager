@@ -1,5 +1,5 @@
 import {db, mongoReference} from "../../common/services/mongodb.service";
-import {Collection, InsertOneWriteOpResult} from "mongodb";
+import {Collection, DeleteWriteOpResultObject, InsertOneWriteOpResult} from "mongodb";
 
 export const createProject = async (projectData: any) => {
 
@@ -57,7 +57,15 @@ export const getProject = async (projectId: string) => {
 export const deleteProject = async (projectId: string) => {
 
     const projectIdObject = new mongoReference.ObjectID(projectId);
-    return  await db.collection('projects').deleteOne({_id: projectIdObject})
+    const deletionResult: DeleteWriteOpResultObject = await db.collection('projects').deleteOne(
+        {_id: projectIdObject}
+        );
+
+    if (deletionResult.deletedCount === 0) {
+        throw {
+            message: `can't find the requested project to delete`
+        };
+    }
 };
 
 export const updateProject = async (projectId: string, projectData: any) => {
