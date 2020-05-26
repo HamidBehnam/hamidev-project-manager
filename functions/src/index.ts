@@ -5,12 +5,14 @@ import {HttpsFunction} from "firebase-functions";
 import {projectsRoutesConfig} from "./projects/routes.config";
 import {usersRoutesConfig} from "./users/routes.config";
 import {mongodbConnector} from "./common/services/mongodb.service";
+import {applicantsRoutesConfig} from "./applicants/routes.config";
 
 const app: Application = express();
 const main: Application = express();
 
 projectsRoutesConfig(app);
 usersRoutesConfig(app);
+applicantsRoutesConfig(app);
 
 mongodbConnector.then(() => {
 
